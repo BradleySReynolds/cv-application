@@ -8,7 +8,7 @@ import Education from "./cv-outputs/Education";
 import EducationInfo from "./cv-inputs/EducationInfo";
 
 const Main = () => {
-  const [information, setInformation] = useState({
+  const [state, setState] = useState({
     personalInfo: {
       fname: "",
       lname: "",
@@ -46,7 +46,8 @@ const Main = () => {
   const handleChangePersonal = (e) => {
     const { name, value } = e.target;
 
-    this.setState((prevState) => ({
+    setState((prevState) => ({
+      ...prevState,
       personalInfo: {
         ...prevState.personalInfo,
         [name]: value,
@@ -58,7 +59,7 @@ const Main = () => {
     const { name, value } = e.target;
     const id = e.target.closest("div").id;
 
-    this.setState((prevState) => {
+    setState((prevState) => {
       const updatedExperienceInfo = prevState.experienceInfo.map((item) => {
         if (item.key === id) {
           return {
@@ -70,6 +71,7 @@ const Main = () => {
       });
 
       return {
+        ...prevState,
         experienceInfo: updatedExperienceInfo,
       };
     });
@@ -78,8 +80,7 @@ const Main = () => {
   const handleChangeEducation = (e) => {
     const { name, value } = e.target;
     const id = e.target.closest("div").id;
-
-    this.setState((prevState) => {
+    setState((prevState) => {
       const updatedEducationInfo = prevState.educationInfo.map((item) => {
         if (item.key === id) {
           return {
@@ -91,13 +92,15 @@ const Main = () => {
       });
 
       return {
+        ...prevState,
         educationInfo: updatedEducationInfo,
       };
     });
   };
 
   const addExperience = () => {
-    this.setState((prevState) => ({
+    setState((prevState) => ({
+      ...prevState,
       experienceInfo: [
         ...prevState.experienceInfo,
         {
@@ -114,7 +117,8 @@ const Main = () => {
   };
 
   const addEducation = () => {
-    this.setState((prevState) => ({
+    setState((prevState) => ({
+      ...prevState,
       educationInfo: [
         ...prevState.educationInfo,
         {
@@ -132,30 +136,32 @@ const Main = () => {
 
   const deleteItemExp = (e) => {
     const id = e.target.id;
-    const newList = this.state.experienceInfo.filter((item) => item.key !== id);
+    const newList = state.experienceInfo.filter((item) => item.key !== id);
 
-    this.setState({
+    setState((prevState) => ({
+      ...prevState,
       experienceInfo: [...newList],
-    });
+    }));
   };
 
   const deleteItemEdu = (e) => {
     const id = e.target.id;
-    const newList = this.state.educationInfo.filter((item) => item.key !== id);
+    const newList = state.educationInfo.filter((item) => item.key !== id);
 
-    this.setState({
+    setState((prevState) => ({
+      ...prevState,
       educationInfo: [...newList],
-    });
+    }));
   };
 
   return (
     <div className="main">
       <div className="info-container">
-        <h3 className="header">Personal Information</h3>
+        <h3 className="header">Personal state</h3>
         <PersonalInfo handleChange={handleChangePersonal} />
 
         <h3 className="header">Experience</h3>
-        {this.state.experienceInfo.map((item) => {
+        {state.experienceInfo.map((item) => {
           return (
             <div className="container experienceCon" key={item.key}>
               <ExperienceInfo
@@ -171,7 +177,7 @@ const Main = () => {
         <button onClick={addExperience}>Add</button>
 
         <h3 className="header">Education</h3>
-        {this.state.educationInfo.map((item) => {
+        {state.educationInfo.map((item) => {
           return (
             <div className="container educationCon" key={item.key}>
               <EducationInfo
@@ -187,9 +193,9 @@ const Main = () => {
         <button onClick={addEducation}>Add</button>
       </div>
       <div className="output-container">
-        <Personal info={this.state.personalInfo} />
+        <Personal info={state.personalInfo} />
         <h3 className="output-header">Experience</h3>
-        {this.state.experienceInfo.map((item) => {
+        {state.experienceInfo.map((item) => {
           return (
             <div key={item.key}>
               <Experience info={item} />
@@ -197,7 +203,7 @@ const Main = () => {
           );
         })}
         <h3 className="output-header">Education</h3>
-        {this.state.educationInfo.map((item) => {
+        {state.educationInfo.map((item) => {
           return (
             <div key={item.key}>
               <Education info={item} />
@@ -208,4 +214,5 @@ const Main = () => {
     </div>
   );
 };
+
 export default Main;
