@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Personal from "./cv-outputs/Personal";
 import PersonalInfo from "./cv-inputs/PersonalInfo";
@@ -7,55 +7,43 @@ import Experience from "./cv-outputs/Experience";
 import Education from "./cv-outputs/Education";
 import EducationInfo from "./cv-inputs/EducationInfo";
 
-class Main extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      personalInfo: {
-        fname: "",
-        lname: "",
-        title: "",
-        street: "",
-        city: "",
-        phone: "",
-        email: "",
+const Main = () => {
+  const [information, setInformation] = useState({
+    personalInfo: {
+      fname: "",
+      lname: "",
+      title: "",
+      street: "",
+      city: "",
+      phone: "",
+      email: "",
+      desc: "",
+    },
+    experienceInfo: [
+      {
+        key: uuidv4(),
+        position: "",
+        company: "",
         desc: "",
+        city: "",
+        from: "",
+        to: "",
       },
-      experienceInfo: [
-        {
-          key: uuidv4(),
-          position: "",
-          company: "",
-          desc: "",
-          city: "",
-          from: "",
-          to: "",
-        },
-      ],
-      educationInfo: [
-        {
-          key: uuidv4(),
-          uniName: "",
-          city: "",
-          degree: "",
-          desc: "",
-          from: "",
-          to: "",
-        },
-      ],
-    };
+    ],
+    educationInfo: [
+      {
+        key: uuidv4(),
+        uniName: "",
+        city: "",
+        degree: "",
+        desc: "",
+        from: "",
+        to: "",
+      },
+    ],
+  });
 
-    this.handleChangePersonal = this.handleChangePersonal.bind(this);
-    this.handleChangeExperience = this.handleChangeExperience.bind(this);
-    this.handleChangeEducation = this.handleChangeEducation.bind(this);
-    this.addExperience = this.addExperience.bind(this);
-    this.addEducation = this.addEducation.bind(this);
-    this.deleteItemEdu = this.deleteItemEdu.bind(this);
-    this.deleteItemExp = this.deleteItemExp.bind(this);
-  }
-
-  handleChangePersonal = (e) => {
+  const handleChangePersonal = (e) => {
     const { name, value } = e.target;
 
     this.setState((prevState) => ({
@@ -66,7 +54,7 @@ class Main extends Component {
     }));
   };
 
-  handleChangeExperience = (e) => {
+  const handleChangeExperience = (e) => {
     const { name, value } = e.target;
     const id = e.target.closest("div").id;
 
@@ -87,7 +75,7 @@ class Main extends Component {
     });
   };
 
-  handleChangeEducation = (e) => {
+  const handleChangeEducation = (e) => {
     const { name, value } = e.target;
     const id = e.target.closest("div").id;
 
@@ -108,7 +96,7 @@ class Main extends Component {
     });
   };
 
-  addExperience = () => {
+  const addExperience = () => {
     this.setState((prevState) => ({
       experienceInfo: [
         ...prevState.experienceInfo,
@@ -125,7 +113,7 @@ class Main extends Component {
     }));
   };
 
-  addEducation = () => {
+  const addEducation = () => {
     this.setState((prevState) => ({
       educationInfo: [
         ...prevState.educationInfo,
@@ -142,7 +130,7 @@ class Main extends Component {
     }));
   };
 
-  deleteItemExp = (e) => {
+  const deleteItemExp = (e) => {
     const id = e.target.id;
     const newList = this.state.experienceInfo.filter((item) => item.key !== id);
 
@@ -151,7 +139,7 @@ class Main extends Component {
     });
   };
 
-  deleteItemEdu = (e) => {
+  const deleteItemEdu = (e) => {
     const id = e.target.id;
     const newList = this.state.educationInfo.filter((item) => item.key !== id);
 
@@ -160,67 +148,64 @@ class Main extends Component {
     });
   };
 
-  render() {
-    return (
-      <div className="main">
-        <div className="info-container">
-          <h3 className="header">Personal Information</h3>
-          <PersonalInfo handleChange={this.handleChangePersonal} />
+  return (
+    <div className="main">
+      <div className="info-container">
+        <h3 className="header">Personal Information</h3>
+        <PersonalInfo handleChange={handleChangePersonal} />
 
-          <h3 className="header">Experience</h3>
-          {this.state.experienceInfo.map((item) => {
-            return (
-              <div className="container experienceCon" key={item.key}>
-                <ExperienceInfo
-                  handleChange={this.handleChangeExperience}
-                  id={item.key}
-                />
-                <button onClick={this.deleteItemExp} id={item.key}>
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-          <button onClick={this.addExperience}>Add</button>
+        <h3 className="header">Experience</h3>
+        {this.state.experienceInfo.map((item) => {
+          return (
+            <div className="container experienceCon" key={item.key}>
+              <ExperienceInfo
+                handleChange={handleChangeExperience}
+                id={item.key}
+              />
+              <button onClick={deleteItemExp} id={item.key}>
+                Delete
+              </button>
+            </div>
+          );
+        })}
+        <button onClick={addExperience}>Add</button>
 
-          <h3 className="header">Education</h3>
-          {this.state.educationInfo.map((item) => {
-            return (
-              <div className="container educationCon" key={item.key}>
-                <EducationInfo
-                  handleChange={this.handleChangeEducation}
-                  id={item.key}
-                />
-                <button onClick={this.deleteItemEdu} id={item.key}>
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-          <button onClick={this.addEducation}>Add</button>
-        </div>
-        <div className="output-container">
-          <Personal info={this.state.personalInfo} />
-          <h3 className="output-header">Experience</h3>
-          {this.state.experienceInfo.map((item) => {
-            return (
-              <div key={item.key}>
-                <Experience info={item} />
-              </div>
-            );
-          })}
-          <h3 className="output-header">Education</h3>
-          {this.state.educationInfo.map((item) => {
-            return (
-              <div key={item.key}>
-                <Education info={item} />
-              </div>
-            );
-          })}
-        </div>
+        <h3 className="header">Education</h3>
+        {this.state.educationInfo.map((item) => {
+          return (
+            <div className="container educationCon" key={item.key}>
+              <EducationInfo
+                handleChange={handleChangeEducation}
+                id={item.key}
+              />
+              <button onClick={deleteItemEdu} id={item.key}>
+                Delete
+              </button>
+            </div>
+          );
+        })}
+        <button onClick={addEducation}>Add</button>
       </div>
-    );
-  }
-}
-
+      <div className="output-container">
+        <Personal info={this.state.personalInfo} />
+        <h3 className="output-header">Experience</h3>
+        {this.state.experienceInfo.map((item) => {
+          return (
+            <div key={item.key}>
+              <Experience info={item} />
+            </div>
+          );
+        })}
+        <h3 className="output-header">Education</h3>
+        {this.state.educationInfo.map((item) => {
+          return (
+            <div key={item.key}>
+              <Education info={item} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 export default Main;

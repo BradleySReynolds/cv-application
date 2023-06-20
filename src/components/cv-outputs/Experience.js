@@ -1,27 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Experience extends Component {
-  constructor(props) {
-    super(props);
-  }
+const Experience = (props) => {
+  const item = props.info;
 
-  render() {
-    const { position, company, city, desc, from, to } = this.props.info;
-
-    return (
-      <div className="experience">
-        <p>
-          <b>{company}</b>, {city} — {position}
-        </p>
-        <p>
-          <span className="grey">
-            {from} - {to}
-          </span>
-        </p>
-        <p className="exp-des">{desc}</p>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="experience">
+      <p>
+        <b>{item.company}</b>, {item.city} — {item.position}
+      </p>
+      <p>
+        <span className="grey">
+          {item.from} - {item.to}
+        </span>
+      </p>
+      <p className="exp-des">{item.desc}</p>
+    </div>
+  );
+};
 
 export default Experience;
