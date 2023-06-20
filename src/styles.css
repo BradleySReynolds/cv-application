@@ -1,0 +1,159 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background-color: #aaa;
+}
+
+.main {
+  display: flex;
+}
+
+.info-container {
+  width: 45%;
+  margin: 1rem 5rem;
+  background-color: #ddd;
+  padding: 1rem;
+  box-shadow: 4px 4px 8px black;
+  border-radius: 8px;
+}
+
+.output-container {
+  position: fixed;
+  right: 0;
+  width: 45%;
+  height: auto;
+  box-shadow: 4px 4px 8px black;
+  background-color: white;
+  padding-bottom: 2rem;
+}
+
+.header {
+  margin-top: 2rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.info-container > .experienceCon:not(:first-of-type),
+.info-container > .educationCon:not(:first-of-type) {
+  margin-top: 1rem;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.inputs > input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 0.25rem;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  margin-top: 0.25rem;
+  padding: 8px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background: white;
+}
+
+button:hover {
+  background-color: #ccc;
+  transition: all 0.4s ease-in-out;
+}
+
+.output-container {
+  margin: 1rem;
+  border: 1px solid black;
+}
+
+.personal-info {
+  display: flex;
+  justify-content: space-around;
+  height: 10%;
+  background-color: #133955;
+  padding: 2rem;
+}
+
+.header-and-desc {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 65%;
+  color: white;
+}
+
+.header-and-desc > h1 {
+  font-size: 42px;
+}
+
+.header-and-desc > h3 {
+  font-size: 26px;
+  margin-left: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.header-and-desc > p {
+  margin-left: 0.5rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: white;
+}
+
+.output-header {
+  margin: 1rem;
+}
+
+.exp-des {
+  margin-top: 0.5rem;
+}
+
+.grey {
+  color: #999;
+  margin-left: 0.25rem;
+}
+
+.experience,
+.education,
+.description > p {
+  width: 65%;
+  margin: 0.5rem 1.5rem;
+}
+
+@media screen and (max-width: 1325px) {
+  .main {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .output-container {
+    position: initial;
+    width: 75%;
+  }
+
+  .info-container {
+    width: 75%;
+  }
+}
